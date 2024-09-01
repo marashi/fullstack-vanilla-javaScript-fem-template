@@ -26,11 +26,14 @@ export default class Controller {
       return;
     }
     this.#view.addRow({ name, age, email });
+    this.#view.resetForm();
   }
+
+  #onClear() {}
 
   #init() {
     this.#view.configureFormSubmit(this.#onSubmit.bind(this));
-    this.#view.configureFormClear();
+    this.#view.configureFormClear(this.#onClear.bind(this));
     const initialData = [
       { name: "Alice", age: 34, email: "a@mm.com" },
       { name: "Bob", age: 24, email: "ss@d.com" },
