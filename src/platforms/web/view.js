@@ -1,16 +1,16 @@
-import ViewBase from "../../shared/viewBase.js";
+import ViewBase from '../../shared/viewBase.js';
 
 export default class View extends ViewBase {
-  #name = document.querySelector("#name");
-  #age = document.querySelector("#age");
-  #email = document.querySelector("#email");
-  #tableBody = document.querySelector(".flex-table");
-  #form = document.querySelector("#form");
-  #btnFormClear = document.querySelector("#btnFormClear");
+  #name = document.querySelector('#name');
+  #age = document.querySelector('#age');
+  #email = document.querySelector('#email');
+  #tableBody = document.querySelector('.flex-table');
+  #form = document.querySelector('#form');
+  #btnFormClear = document.querySelector('#btnFormClear');
 
   addRow(data) {
-    const row = document.createElement("div");
-    row.classList.add("flex-table-row");
+    const row = document.createElement('div');
+    row.classList.add('flex-table-row');
     row.innerHTML = `
       <div>${data.name}</div>
       <div>${data.age}</div>
@@ -26,7 +26,7 @@ export default class View extends ViewBase {
    * @returns {void}
    */
   configureFormSubmit(fn) {
-    this.#form.addEventListener("submit", (event) => {
+    this.#form.addEventListener('submit', (event) => {
       event.preventDefault();
       fn({
         name: this.#name.value,
@@ -43,7 +43,7 @@ export default class View extends ViewBase {
    * @returns {void}
    */
   configureFormClear(fn) {
-    this.#btnFormClear.addEventListener("click", () => {
+    this.#btnFormClear.addEventListener('click', () => {
       this.resetForm();
       fn(); // just for the sake of consistency with the shared code
     });
@@ -66,7 +66,7 @@ export default class View extends ViewBase {
    * @returns {void}
    */
   notify({ msg, isError }) {
-    alert("Please fill out all the fields");
+    alert('Please fill out all the fields');
   }
 
   render(items) {

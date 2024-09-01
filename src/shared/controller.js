@@ -22,7 +22,7 @@ export default class Controller {
 
   #onSubmit({ name, age, email }) {
     if (!this.#isValid({ name, age, email })) {
-      this.#view.notify({ msg: "Invalid data", isError: true });
+      this.#view.notify({ msg: 'Invalid data', isError: true });
       return;
     }
     this.#view.addRow({ name, age, email });
@@ -35,9 +35,9 @@ export default class Controller {
     this.#view.configureFormSubmit(this.#onSubmit.bind(this));
     this.#view.configureFormClear(this.#onClear.bind(this));
     const initialData = [
-      { name: "Alice", age: 34, email: "a@mm.com" },
-      { name: "Bob", age: 24, email: "ss@d.com" },
-      { name: "Charlie", age: 45, email: "dscf@sd.com" },
+      { name: 'Alice', age: 34, email: 'a@mm.com' },
+      { name: 'Bob', age: 24, email: 'ss@d.com' },
+      { name: 'Charlie', age: 45, email: 'dscf@sd.com' },
     ];
     this.#view.render(initialData);
   }

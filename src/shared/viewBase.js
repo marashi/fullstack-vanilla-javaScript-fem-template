@@ -13,7 +13,7 @@ export default class ViewBase {
    * @returns {void}
    */
   configureFormSubmit(fn) {
-    throw new Error("not implemented!");
+    throw new Error('not implemented!');
   }
 
   /**
@@ -21,7 +21,7 @@ export default class ViewBase {
    * @returns {void}
    */
   resetForm() {
-    throw new Error("not implemented!");
+    throw new Error('not implemented!');
   }
 
   /**
@@ -33,7 +33,7 @@ export default class ViewBase {
    * @returns {void}
    */
   notify({ msg, isError }) {
-    throw new Error("not implemented!", msg);
+    throw new Error('not implemented!', msg);
   }
 
   /**
@@ -43,7 +43,7 @@ export default class ViewBase {
    * @returns {void}
    */
   configureFormClear(fn) {
-    throw new Error("not implemented!");
+    throw new Error('not implemented!');
   }
 
   /**
@@ -53,7 +53,7 @@ export default class ViewBase {
    * @returns {void}
    */
   addRow(data) {
-    throw new Error("not implemented!");
+    throw new Error('not implemented!');
   }
 
   /**
@@ -63,6 +63,6 @@ export default class ViewBase {
    * @returns {void}
    */
   render(items) {
-    throw new Error("not implemented!");
+    throw new Error('not implemented!');
   }
 }
