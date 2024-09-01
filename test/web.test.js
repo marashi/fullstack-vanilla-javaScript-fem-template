@@ -13,9 +13,9 @@ function getDocument(mock) {
       appendChild: mock.fn(() => {}),
       reset: mock.fn(() => {}),
       addEventListener: mock.fn((event, fn) => {
-        return fn({
-          preventDefault: mock.fn(() => {}),
-        });
+        // fn({
+        //   preventDefault: mock.fn(() => {}),
+        // });
       }),
     })),
     createElement: mock.fn((name) => ({
@@ -24,7 +24,7 @@ function getDocument(mock) {
       },
     })),
     addEventListener: mock.fn((event, fn) => {
-      return fn({
+      fn({
         preventDefault: mock.fn(() => {}),
       });
     }),
@@ -40,7 +40,11 @@ describe('Web app test suite', () => {
   });
   it('should be able to run tests', (context) => {
     const document = getDocument(context.mock);
-    _controller = Controller.init({ view: new View() });
+    const view = new View();
+
+    const addRow = context.mock.method(view, view.addRow.name);
+
+    _controller = Controller.init({ view });
 
     const [name, age, email, tableBody, form, btnFormClear] =
       document.querySelector.mock.calls;
@@ -51,5 +55,21 @@ describe('Web app test suite', () => {
     assert.strictEqual(tableBody.arguments[0], '.flex-table');
     assert.strictEqual(form.arguments[0], '#form');
     assert.strictEqual(btnFormClear.arguments[0], '#btnFormClear');
+
+    const listenerCallback =
+      form.result.addEventListener.mock.calls[0].arguments[1];
+    const preventDefaultSpy = context.mock.fn();
+
+    assert.strictEqual(addRow.mock.callCount(), 3);
+
+    listenerCallback({ preventDefault: preventDefaultSpy });
+
+    assert.strictEqual(addRow.mock.callCount(), 4);
+
+    assert.deepStrictEqual(addRow.mock.calls.at(3).arguments.at(0), {
+      name: 'test',
+      age: 'test',
+      email: 'test',
+    });
   });
 });
