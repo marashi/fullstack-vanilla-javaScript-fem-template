@@ -24,13 +24,19 @@ export default class Controller {
     return name && age && email;
   }
 
-  #onSubmit({ name, age, email }) {
+  async #onSubmit({ name, age, email }) {
     if (!this.#isValid({ name, age, email })) {
       this.#view.notify({ msg: 'Invalid data', isError: true });
       return;
     }
     this.#view.addRow({ name, age, email });
     this.#view.resetForm();
+
+    try {
+      await this.#service.createUser({ name, age, email });
+    } catch (error) {
+      this.#view.notify({ msg: 'Server is not available!', isError: true });
+    }
   }
 
   #onClear() {}
@@ -39,7 +45,7 @@ export default class Controller {
     try {
       return await this.#service.getUsers();
     } catch {
-      this.#view.notify({ msg: 'Server is not available!' });
+      this.#view.notify({ msg: 'Server is not available!', isError: true });
       return [];
     }
   }
