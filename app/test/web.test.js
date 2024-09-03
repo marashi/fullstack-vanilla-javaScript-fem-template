@@ -38,13 +38,19 @@ describe('Web app test suite', () => {
   before(() => {
     // _controller = Controller.init({ view: new View() });
   });
-  it('should update table if data is valid', (context) => {
+  it('should update table if data is valid', async (context) => {
     const document = getDocument(context.mock);
     const view = new View();
 
     const addRow = context.mock.method(view, view.addRow.name);
 
-    _controller = Controller.init({ view });
+    _controller = await Controller.init({
+      view,
+      service: {
+        createUser: context.mock.fn(async () => ({})),
+        getUsers: context.mock.fn(async () => []),
+      },
+    });
 
     const [name, age, email, tableBody, form, btnFormClear] =
       document.querySelector.mock.calls;
@@ -73,7 +79,7 @@ describe('Web app test suite', () => {
     });
   });
 
-  it('should notify if form is invalid', (context) => {
+  it('should notify if form is invalid', async (context) => {
     const document = getDocument(context.mock, {
       name: '',
       age: '12',
@@ -92,7 +98,13 @@ describe('Web app test suite', () => {
     const addRow = context.mock.method(view, view.addRow.name);
     const notify = context.mock.method(view, view.notify.name);
 
-    _controller = Controller.init({ view });
+    _controller = await Controller.init({
+      view,
+      service: {
+        createUser: context.mock.fn(async () => ({})),
+        getUsers: context.mock.fn(async () => []),
+      },
+    });
 
     const [name, age, email, tableBody, form, btnFormClear] =
       document.querySelector.mock.calls;

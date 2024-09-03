@@ -2,7 +2,6 @@ import { describe, it, before, mock } from 'node:test';
 import Controller from '../src/shared/controller.js';
 import assert from 'node:assert';
 import ViewBase from '../src/shared/viewBase.js';
-import { init } from 'browser-sync';
 
 function generateView() {
   class View extends ViewBase {
@@ -21,13 +20,19 @@ describe('Controller test suite', () => {
   let _controller;
   let view;
   before(() => {
-    view = generateView();
-    _controller = Controller.init({ view });
+    // view = generateView();
+    // _controller = Controller.init({ view });
   });
 
-  it('#init', () => {
+  it('#init', async () => {
     const view = generateView();
-    _controller = Controller.init({ view });
+    _controller = await Controller.init({
+      view,
+      service: {
+        getUsers: mock.fn(async () => []),
+        createUser: mock.fn(async () => ({})),
+      },
+    });
     assert(view.configureFormSubmit.mock.calls.length, 1);
     assert(view.configureFormClear.mock.calls.length, 1);
     const renderMock = view.render.mock;
@@ -39,22 +44,4 @@ describe('Controller test suite', () => {
     ];
     assert.deepStrictEqual(renderMock.calls[0].arguments[0], initialData);
   });
-
-  //   it('should notify user if data is invalid', () => {
-  //     const notify = view.notify;
-  //     _controller['#onSubmit']({ name: '', age: '', email: '' });
-  //     assert(notify.mock.calls.length, 1);
-  //     assert(notify.mock.calls[0].arguments, [
-  //       { msg: 'Invalid data', isError: true },
-  //     ]);
-  //   });
-
-  //   it('should add row if data is valid', () => {
-  //     const addRow = view.addRow;
-  //     _controller['#onSubmit']({ name: 'Alice', age: 34, email: 'aa@aa.com' });
-  //     assert(addRow.mock.calls.length, 1);
-  //     assert(addRow.mock.calls[0].arguments, [
-  //       { name: 'Alice', age: 34, email: '' },
-  //     ]);
-  //   });
 });
