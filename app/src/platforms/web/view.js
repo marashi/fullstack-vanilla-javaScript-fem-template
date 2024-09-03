@@ -66,7 +66,7 @@ export default class View extends ViewBase {
    * @returns {void}
    */
   notify({ msg, isError }) {
-    alert('Please fill out all the fields');
+    alert(msg);
   }
 
   render(items) {

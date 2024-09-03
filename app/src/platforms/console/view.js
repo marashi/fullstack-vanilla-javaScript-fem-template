@@ -32,7 +32,7 @@ export default class View extends ViewBase {
     this.#components.screen.render();
   }
   notify({ msg, isError }) {
-    this.#components.alert.setMessage(msg);
+    this.#components?.alert.setMessage(msg);
   }
   configureFormSubmit(fn) {
     this.#onFormSubmit = (data) => fn(data);
