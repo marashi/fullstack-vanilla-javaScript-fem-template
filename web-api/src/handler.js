@@ -31,7 +31,16 @@ export default function handler(request, response) {
 
   const key = `${pathname}:${method.toLowerCase()}`;
   const chosen = allRoutes[key] ?? allRoutes.default;
-  return Promise.resolve(chosen(request, response)).catch((error) => {
-    console.error(error);
-  });
+  return Promise.resolve(chosen(request, response)).catch(
+    handleError(response)
+  );
+}
+
+function handleError(response) {
+  return (error) => {
+    console.log('something went wrong', error.stack);
+    response.writeHead(500, DEFAULT_HEADERS);
+    response.write(JSON.stringify({ error: 'Internal Server Error' }));
+    response.end();
+  };
 }

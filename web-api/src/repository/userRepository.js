@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 export default class UserRepository {
   #file;
@@ -6,7 +6,17 @@ export default class UserRepository {
     this.#file = file;
   }
 
+  #currentFileContent = async () => {
+    return JSON.parse(await readFile(this.#file));
+  };
+
   async find() {
-    return readFile(this.#file).then((data) => JSON.parse(data));
+    return this.#currentFileContent();
+  }
+
+  async create(data) {
+    const currentData = await this.#currentFileContent();
+    const newContent = JSON.stringify([...currentData, data]);
+    return writeFile(this.#file, newContent);
   }
 }

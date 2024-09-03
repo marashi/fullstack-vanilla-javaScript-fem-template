@@ -7,4 +7,8 @@ export default class UserService {
   find() {
     return this.#userRepository.find();
   }
+
+  create(data) {
+    return this.#userRepository.create(data);
+  }
 }
