@@ -6,6 +6,7 @@ export default class LayoutBuilder {
   #layout;
   #form;
   #alert;
+  #table;
   #inputs = {};
   #buttons = {};
 
@@ -195,12 +196,50 @@ export default class LayoutBuilder {
     return this;
   }
 
+  setTableComponent({ numColumns }) {
+    const columnWidth = Math.floor(this.#layout.width / numColumns);
+    const minColumnWidth = 10;
+    const columnWidths = Array(numColumns)
+      .fill(columnWidth)
+      .map((width) => Math.max(minColumnWidth, width));
+
+    this.#table = contrib.table({
+      parent: this.#layout,
+      keys: true,
+      mouse: true,
+      scrollbar: {
+        ch: ' ',
+        inverse: true,
+      },
+      vi: false,
+      tags: true,
+      fg: 'white',
+      selectedFg: 'white',
+      selectedBg: 'blue',
+      interactive: true,
+      label: 'User list',
+      width: '100%',
+      height: '50%',
+      top: 0,
+      left: 0,
+      border: {
+        type: 'line',
+        fg: 'cyan',
+      },
+      columnSpacing: 10,
+      columnWidth: columnWidths,
+    });
+
+    return this;
+  }
+
   build() {
     const components = {
       screen: this.#screen,
       layout: this.#layout,
       form: this.#form,
       alert: this.#alert,
+      table: this.#table,
     };
     components.screen.render();
     return components;

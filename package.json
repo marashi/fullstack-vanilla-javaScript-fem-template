@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "user-management-app": "./ui/index.js"
+    "user-management-app": "ui/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/marashi/fullstack-vanilla-javaScript-fem-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marashi/fullstack-vanilla-javaScript-fem-template.git"
   },
   "scripts": {
     "web": "npx browser-sync './' ui/",
