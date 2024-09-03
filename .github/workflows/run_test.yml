@@ -17,11 +17,24 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Restore Dependencies
+
+      - name: Restore Dependencies for app
         run: npm ci
-      - name: Run Test
+        working-directory: ./app/
+
+      - name: Run Test for app
         run: npm test
+        working-directory: ./app/
+
+      - name: Restore Dependencies for web-api
+        run: npm ci
+        working-directory: ./web-api
+
+      - name: Run Test for web-api
+        run: npm test
+        working-directory: ./web-api
